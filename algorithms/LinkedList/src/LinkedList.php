@@ -66,7 +66,7 @@ class LinkedList {
     if (is_null($head)) $head = $this->head;
 
     if (is_null($head) || is_null($head->next)) {
-        return $head; // base case: if the list is empty or has one node
+      return $head; // base case: if the list is empty or has one node
     }
 
     // Step 1: Get the middle node

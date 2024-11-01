@@ -11,7 +11,7 @@
       <h1>Linked List Structure</h1>
     </div>
     <div id="inserting">
-      <input type="number" id="insert-value" placeholder="Enter number here">
+      <input type="text" id="insert-value" placeholder="Enter number here">
       <button data-type="first" class="insert-action">Insert First</button>
       <button data-type="last" class="insert-action">Insert Last</button>
       <button id="delete-action">Delete</button>
