@@ -62,22 +62,49 @@ class LinkedList {
     }
   }
 
-  public function mergeSort($head = null){
-    if(is_null($head)) $head = $this->head;
+  /* OLD */
+  // public function mergeSort($head = null){
+  //   if(is_null($head)) $head = $this->head;
 
-    if(is_null($head) || is_null($head->next)){
-      return $head;
+  //   if(is_null($head) || is_null($head->next)){
+  //     return $head;
+  //   }
+
+  //   $middle = $this->getMiddle($head);
+  //   $nextToMiddle = $middle->next;
+
+  //   $middle->next = null;
+
+  //   echo "middle:". json_encode($middle);
+  //   echo "nextToMiddle:". json_encode($nextToMiddle);
+
+  //   $left = $this->mergeSort($middle);
+  //   $right = $this->mergeSort($nextToMiddle);
+
+  //   return $this->sortedMerge($left, $right);
+  // }
+
+  public function mergeSort($head = null) {
+    if (is_null($head)) $head = $this->head;
+
+    if (is_null($head) || is_null($head->next)) {
+        return $head; // base case: if the list is empty or has one node
     }
 
+    // Step 1: Get the middle node
     $middle = $this->getMiddle($head);
     $nextToMiddle = $middle->next;
 
-    $middle->next = null;
+    // Step 2: Split the list into two halves
+    $middle->next = null; // Break the list into two halves
 
-    $left = $this->mergeSort($middle);
-    $right = $this->mergeSort($nextToMiddle);
+    // Step 3: Sort the two halves
+    $left = $this->mergeSort($head); // Sort the left half
+    $right = $this->mergeSort($nextToMiddle); // Sort the right half
 
-    return $this->sortedMerge($left, $right);
+    // Step 4: Merge the sorted halves
+    $this->head = $this->sortedMerge($left, $right); // Update the head with the sorted list
+    return $this->head; // Return the sorted head
   }
 
   private function getMiddle($head){
@@ -94,16 +121,35 @@ class LinkedList {
     return $slow;
   }
 
-  private function sortedMerge($left, $right){
-    if(is_null($left)) return $right;
-    if(is_null($right)) return $left;
+  /* OLD */
+  // private function sortedMerge($left, $right){
+  //   if(is_null($left)) return $right;
+  //   if(is_null($right)) return $left;
 
-    if($left->value <= $right->value){
-      $result = $left;
-      $result->next = $this->sortedMerge($left->next, $right);
-    }else{
-      $result = $right;
-      $result->next = $this->sortedMerge($left, $right->next);
+  //   if($left->value <= $right->value){
+  //     $result = $left;
+  //     $result->next = $this->sortedMerge($left->next, $right);
+  //   }else{
+  //     $result = $right;
+  //     $result->next = $this->sortedMerge($left, $right->next);
+  //   }
+
+  //   return $result;
+  // }
+
+  private function sortedMerge($left, $right) {
+    if (is_null($left)) return $right;
+    if (is_null($right)) return $left;
+
+    $result = null;
+
+    // Compare the values and build the sorted linked list
+    if ($left->value <= $right->value) {
+      $result = $left; // Start with the left node
+      $result->next = $this->sortedMerge($left->next, $right); // Recursively merge the rest
+    } else {
+      $result = $right; // Start with the right node
+      $result->next = $this->sortedMerge($left, $right->next); // Recursively merge the rest
     }
 
     return $result;

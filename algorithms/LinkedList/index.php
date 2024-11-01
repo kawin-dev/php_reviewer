@@ -52,9 +52,7 @@ class Index {
 
     switch($type){
       case 'merge':
-        echo "Before sorting: " . json_encode($this->linkedList->returnHTML());
         $this->linkedList->mergeSort();
-        echo "After sorting: " . json_encode($this->linkedList->returnHTML());
         break;
     }
 
