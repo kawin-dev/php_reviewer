@@ -62,28 +62,6 @@ class LinkedList {
     }
   }
 
-  /* OLD */
-  // public function mergeSort($head = null){
-  //   if(is_null($head)) $head = $this->head;
-
-  //   if(is_null($head) || is_null($head->next)){
-  //     return $head;
-  //   }
-
-  //   $middle = $this->getMiddle($head);
-  //   $nextToMiddle = $middle->next;
-
-  //   $middle->next = null;
-
-  //   echo "middle:". json_encode($middle);
-  //   echo "nextToMiddle:". json_encode($nextToMiddle);
-
-  //   $left = $this->mergeSort($middle);
-  //   $right = $this->mergeSort($nextToMiddle);
-
-  //   return $this->sortedMerge($left, $right);
-  // }
-
   public function mergeSort($head = null) {
     if (is_null($head)) $head = $this->head;
 
@@ -99,7 +77,7 @@ class LinkedList {
     $middle->next = null; // Break the list into two halves
 
     // Step 3: Sort the two halves
-    $left = $this->mergeSort($head); // Sort the left half
+    $left = $this->mergeSort($head); // Sort the left half replaced $middle to left since middle is used for right
     $right = $this->mergeSort($nextToMiddle); // Sort the right half
 
     // Step 4: Merge the sorted halves
@@ -120,22 +98,6 @@ class LinkedList {
 
     return $slow;
   }
-
-  /* OLD */
-  // private function sortedMerge($left, $right){
-  //   if(is_null($left)) return $right;
-  //   if(is_null($right)) return $left;
-
-  //   if($left->value <= $right->value){
-  //     $result = $left;
-  //     $result->next = $this->sortedMerge($left->next, $right);
-  //   }else{
-  //     $result = $right;
-  //     $result->next = $this->sortedMerge($left, $right->next);
-  //   }
-
-  //   return $result;
-  // }
 
   private function sortedMerge($left, $right) {
     if (is_null($left)) return $right;
