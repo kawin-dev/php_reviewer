@@ -46,6 +46,18 @@ class Index {
     $this->linkedList = unserialize($_SESSION['linkedList']);
     return $this->linkedList->returnHTML();
   }
+
+  public function sortList(){
+    $this->linkedList = unserialize($_SESSION['linkedList']);
+    return $this->linkedList->returnHTML();
+  }
+
+  public function deleteValue($deleteValue){
+    $this->linkedList = unserialize($_SESSION['linkedList']);
+    $this->linkedList->deleteValue($deleteValue);
+    $_SESSION['linkedList'] = serialize($this->linkedList);
+    return $this->linkedList->returnHTML();
+  }
 }
 
 error_reporting(E_ALL);
@@ -79,9 +91,29 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_GET['action'])) {
         exit;
       }
     }
+  }else if($action === 'delete'){
+    if(isset($data['delete_value']) && $data['delete_value'] != ""){
+      $newListStructure = $index->deleteValue($data['delete_value']);
+
+      $response = [
+        'status' => 'success',
+        'message' => 'Data inserted deleted',
+        'html' => $newListStructure
+      ];
+  
+      header('Content-Type: application/json');
+      error_log("Response: " . json_encode($response));
+  
+      echo json_encode($response);
+      exit;
+    }else{
+      header('HTTP/1.1 400 Bad Request');
+      echo json_encode(['status' => 'error', 'message' => 'Delete Value Cannot Be Empty!']);
+      exit;
+    }
   } else {
     header('HTTP/1.1 400 Bad Request');
-    echo json_encode(['status' => 'error', 'message' => 'Missing insert_value']);
+    echo json_encode(['status' => 'error', 'message' => 'Invalid actions']);
     exit;
   }
 }
@@ -95,6 +127,8 @@ if($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['action'])){
 
   if($action === 'reset-list'){
     $response['html'] = $index->resetList();
+  }else if($action === 'merge-sort'){
+    $response['html'] = $index->sortList();
   }
 
   header('Content-Type: application/json');

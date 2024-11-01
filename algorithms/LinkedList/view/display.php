@@ -14,6 +14,8 @@
       <input type="number" id="insert-value" placeholder="Enter number here">
       <button data-type="first" class="insert-action">Insert First</button>
       <button data-type="last" class="insert-action">Insert Last</button>
+      <button id="delete-action">Delete</button>
+      <button data-action="merge-sort" class="sort-list">Merge Sort List</button>
       <button id="reset-list">Reset List</button>
     </div>
     <div id="list-display"></div>
@@ -27,13 +29,56 @@
 
     document.addEventListener('DOMContentLoaded', function() {
       const insertActions = document.getElementsByClassName('insert-action');
+      const sortActions = document.getElementsByClassName('sort-list');
+
+      document.getElementById('delete-action').addEventListener('click', function(event){
+        const data = {
+          delete_value: document.getElementById('insert-value').value
+        };
+
+        fetch('index.php?action=delete', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(data)
+        })
+        .then(response => response.json())
+        .then(data => {
+          console.log(data);
+          displayList(data.html);
+        })
+        .catch(error => {
+          console.log("error::", error);
+        })
+      });
+
+      Array.from(sortActions).forEach(element => {
+        element.addEventListener('click', function(event){
+          event.preventDefault();
+          const action = element.getAttribute('data-action');
+
+          fetch(`index.php?action=${action}`, {
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/json'
+            }
+          })
+          .then(response => response.json())
+          .then(data => {
+            console.log(data);
+            displayList(data.html);
+          })
+          .catch(error => {
+            console.log(error);
+          });
+        });
+      });
+
       Array.from(insertActions).forEach(element => {
         element.addEventListener('click', function(event) {
           event.preventDefault();
           const type = element.getAttribute('data-type');
-
-          console.log("type::", type);
-
           const data = {
             insert_value: document.getElementById('insert-value').value
           };

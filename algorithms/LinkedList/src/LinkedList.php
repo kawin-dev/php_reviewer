@@ -36,6 +36,25 @@ class LinkedList {
     }
   }
 
+  public function deleteValue($deleteValue){
+    $traverseNode = $this->head;
+    $previousNode = null;
+
+    while($traverseNode != null){
+      if($traverseNode->value == $deleteValue){
+        if(is_null($previousNode)){
+          $this->head = $traverseNode->next;
+        }else{
+          $previousNode->next = $traverseNode->next;
+        }
+        return;
+      }
+
+      $previousNode = $traverseNode;
+      $traverseNode = $traverseNode->next;
+    }
+  }
+
   public function returnHTML(){
     $traverseNode = $this->head;
     $htmlArray = [];
