@@ -16,8 +16,15 @@
       <button data-type="last" class="insert-action">Insert Last</button>
       <button id="reset-list">Reset List</button>
     </div>
+    <div id="list-display"></div>
   </div>
   <script>
+    function displayList(htmlArray){
+      const listDisplay = document.getElementById('list-display');
+
+      listDisplay.innerHTML = htmlArray.join('');
+    }
+
     document.addEventListener('DOMContentLoaded', function() {
       const insertActions = document.getElementsByClassName('insert-action');
       Array.from(insertActions).forEach(element => {
@@ -41,6 +48,7 @@
           .then(response => response.json())
           .then(data => {
             console.log("Response:", data);
+            displayList(data.html);
           })
           .catch(error => {
             console.error("Error:", error);
@@ -58,6 +66,7 @@
         .then(response => response.json())
         .then(data => {
           console.log(data);
+          displayList(data.html);
         })
         .catch(error => {
           console.log(error);

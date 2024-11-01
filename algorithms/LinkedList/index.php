@@ -69,7 +69,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_GET['action'])) {
           'status' => 'success',
           'message' => 'Data inserted successfully',
           'html' => $newListStructure,
-          'type' => $actionType
+          'type' => $_GET['type']
         ];
     
         header('Content-Type: application/json');
