@@ -1,0 +1,15 @@
+{
+    "name": "gracia/linked-list",
+    "autoload": {
+        "psr-4": {
+            "Algorithms\\LinkedList\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Kawin Cheong",
+            "email": "cheong.kawin.dev@gmail.com"
+        }
+    ],
+    "require": {}
+}
