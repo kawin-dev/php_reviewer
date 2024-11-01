@@ -47,8 +47,19 @@ class Index {
     return $this->linkedList->returnHTML();
   }
 
-  public function sortList(){
+  public function sortList($type){
     $this->linkedList = unserialize($_SESSION['linkedList']);
+
+    switch($type){
+      case 'merge':
+        echo "Before sorting: " . json_encode($this->linkedList->returnHTML());
+        $this->linkedList->mergeSort();
+        echo "After sorting: " . json_encode($this->linkedList->returnHTML());
+        break;
+    }
+
+    $_SESSION['linkedList'] = serialize($this->linkedList);
+
     return $this->linkedList->returnHTML();
   }
 
@@ -127,8 +138,11 @@ if($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['action'])){
 
   if($action === 'reset-list'){
     $response['html'] = $index->resetList();
-  }else if($action === 'merge-sort'){
-    $response['html'] = $index->sortList();
+  }else if($action === 'sort-list'){
+    if(isset($_GET['type'])){
+      $response['type'] = $_GET['type'];
+      $response['html'] = $index->sortList($_GET['type']);
+    }
   }
 
   header('Content-Type: application/json');

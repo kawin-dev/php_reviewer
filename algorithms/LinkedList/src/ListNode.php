@@ -7,7 +7,7 @@ class ListNode {
   use ListNodeTrait;
 
   public function __construct($value) {
-    $this->value = $value;
+    $this->value = (int)$value;
     $this->next = null;
   }
 }

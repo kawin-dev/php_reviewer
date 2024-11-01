@@ -15,7 +15,7 @@
       <button data-type="first" class="insert-action">Insert First</button>
       <button data-type="last" class="insert-action">Insert Last</button>
       <button id="delete-action">Delete</button>
-      <button data-action="merge-sort" class="sort-list">Merge Sort List</button>
+      <button data-type="merge" class="sort-list">Merge Sort List</button>
       <button id="reset-list">Reset List</button>
     </div>
     <div id="list-display"></div>
@@ -56,9 +56,9 @@
       Array.from(sortActions).forEach(element => {
         element.addEventListener('click', function(event){
           event.preventDefault();
-          const action = element.getAttribute('data-action');
+          const type = element.getAttribute('data-type');
 
-          fetch(`index.php?action=${action}`, {
+          fetch(`index.php?action=sort-list&type=${type}`, {
             method: 'GET',
             headers: {
               'Content-Type': 'application/json'
